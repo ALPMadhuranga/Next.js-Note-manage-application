@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { validateForm } from "@/validation/formValidation";
+import { validateRegisterForm } from "@/validation/formValidation";
 import { useState } from "react";
 
 const Register = () => {
@@ -19,7 +19,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formData);
+    const validationErrors = validateRegisterForm(formData);
     if (Object.keys(validationErrors).length === 0) {
       console.log('data submitted') // Proceed with form submission
     } else {

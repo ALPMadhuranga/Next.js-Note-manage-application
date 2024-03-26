@@ -1,7 +1,44 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import { validateLoginForm } from "@/validation/formValidation";
+import { useState } from "react";
+
 
 const Login = () => {
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateLoginForm(formData);
+    if (Object.keys(validationErrors).length === 0) {
+      console.log('data submitted') // Proceed with form submission
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setErrors({
+      ...errors,
+      [name]: '', // Clear error when user starts typing again
+    });
+  };
+
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-0">
       <div className="mx-auto container flex items-center" id="nav">
@@ -15,7 +52,7 @@ const Login = () => {
             </div>
 
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-8">
                   <label
                     for="username"
@@ -39,13 +76,18 @@ const Login = () => {
                       </svg>
                     </div>
                     <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       className="block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="test@example.com"
                     />
                   </div>
-                  <strong className="text-red-500 text-xs italic">
-                    username is require
-                  </strong>
+                  {errors.email && <strong className="text-red-500 text-xs">
+                    {errors.email}
+                  </strong>}
                 </div>
 
                 <div className="mb-8">
@@ -72,16 +114,20 @@ const Login = () => {
                     </div>
                     <input
                       type="password"
+                      name="password"
+                      id="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       className="block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="Enter your password"
                     />
                   </div>
-                  <strong className="text-red-500 text-xs italic">
-                    Password is require
-                  </strong>
+                  {errors.password && <strong className="text-red-500 text-xs">
+                    {errors.password}
+                  </strong>}
                 </div>
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <label
@@ -106,7 +152,7 @@ const Login = () => {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="mb-4 text-center">
                   <button
