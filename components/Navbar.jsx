@@ -10,7 +10,7 @@ const Navbar = () => {
     const [  open, setOpen ] = useState( false )
   return (
     <>
-    <header className="border-b bg-white border-gray-300 py-2 sticky top-0">
+    <header className="border-b bg-white border-gray-300 py-2 z-10 sticky top-0">
         <div className="flex justify-between items-center xl:max-w-7xl xl:mx-auto max-w-full px-[8%] flex-wrap">
             <Link href="/" className='flex items-center'>
         <Image
