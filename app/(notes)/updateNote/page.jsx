@@ -25,13 +25,14 @@ const Create = () => {
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <input
+                      id='title'
+                      name='title'
+                      type="text"
+                      required
                       className="block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="Enter Note Title"
                     />
                   </div>
-                  <strong className="text-red-500 text-xs italic">
-                    Title is require
-                  </strong>
                 </div>
 
                 <div className="mb-8">
@@ -43,23 +44,23 @@ const Create = () => {
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <textarea
+                      id='description'
+                      name='description'
                       type="text"
+                      required
                       className="h-48 block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="Enter Description"
                     />
                   </div>
-                  <strong className="text-red-500 text-xs italic">
-                    Description is require
-                  </strong>
-                <hr className='mt-4' />
+                <hr className='mt-8' />
                 </div>
 
-                <div className="mb-4 text-center">
+                <div className="mb-2 text-center">
                   <button
-                    className=" transition duration-500 bg-teal-500 hover:bg-teal-700 text-lg text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+                    className=" transition duration-500 bg-teal-500 hover:bg-teal-700 text-lg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
                   >
-                    Edit
+                    Update
                   </button>
                 </div>
               </form>

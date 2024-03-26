@@ -165,7 +165,7 @@ const Login = () => {
                 <hr />
                 <div className="mt-2">
                   <p className="text-md">
-                    no account
+                    No account?
                     <Link href="/register" className="font-bold text-lg text-teal-500 hover:text-teal-800">
                       Sign-Up
                     </Link>

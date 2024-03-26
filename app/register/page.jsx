@@ -2,8 +2,11 @@
 import Link from "next/link";
 import { validateRegisterForm } from "@/validation/formValidation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -21,7 +24,13 @@ const Register = () => {
     e.preventDefault();
     const validationErrors = validateRegisterForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-      console.log('data submitted') // Proceed with form submission
+    //  Proceed with form submission
+      try {
+        router.push("/login")
+      } catch (error) {
+        setErrors("Error, try again!")
+        console.log(error)
+      }
     } else {
       setErrors(validationErrors)
     }
