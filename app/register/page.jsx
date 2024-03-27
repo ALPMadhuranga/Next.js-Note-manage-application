@@ -20,15 +20,35 @@ const Register = () => {
     password: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateRegisterForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-    //  Proceed with form submission
+
+      console.log(formData)
+
       try {
-        router.push("/login")
+        const res = await fetch("/api/register", {      //  Proceed with form submission
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+        if (res.status === 400) {
+          console.log("This email is already registered");
+      }
+      if (res.status === 200) {
+          console.log("");
+          router.push("/login");
+      }
+
       } catch (error) {
-        setErrors("Error, try again!")
+        console.log("Error, try again!")
         console.log(error)
       }
     } else {
