@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { validateRegisterForm } from "@/validation/formValidation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Register = () => {
-  const router = useRouter();
+
+  const {data: session, status} = useSession();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -19,11 +22,12 @@ const Register = () => {
     password: "",
   });
 
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateRegisterForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-      console.log(formData);
 
       try {
         const res = await fetch("/api/register", {
@@ -65,6 +69,12 @@ const Register = () => {
       [name]: "", // Clear error when user starts typing again
     });
   };
+
+  if (status === "loading") {
+    return <LoadingSpinner />;
+  } else if (status === "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-5">

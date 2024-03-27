@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { validateLoginForm } from "@/validation/formValidation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -22,12 +22,6 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  // useEffect(() => {
-  //   if (sessionStatus === "authenticated") {
-  //     router.replace("/");
-  //   }
-  // }, [sessionStatus, router]);
 
 
   const handleSubmit = async (e) => {

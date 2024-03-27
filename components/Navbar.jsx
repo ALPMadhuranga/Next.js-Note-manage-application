@@ -1,15 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MdMenuOpen } from "react-icons/md";
 
 import NavLogo from "../public/assets/logo2.png";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
+
 
   return (
     <>
@@ -43,7 +44,9 @@ const Navbar = () => {
                     <Link href="/">Home</Link>
                   </li>
                   <li className="mx-2 py-2 px-4 lg:px-6 lg:py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-800 font-semibold">
-                    <Link href="/login">Logout</Link>
+                    <button onClick={() => {
+                      signOut()
+                    }}>Logout</button>
                   </li>
                 </>
               )}
