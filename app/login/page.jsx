@@ -1,10 +1,14 @@
 "use client"
 import Link from "next/link";
 import { validateLoginForm } from "@/validation/formValidation";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Login = () => {
+
+  const {data: session, status} = useSession();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -16,11 +20,38 @@ const Login = () => {
     password: '',
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   if (sessionStatus === "authenticated") {
+  //     router.replace("/");
+  //   }
+  // }, [sessionStatus, router]);
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const validationErrors = validateLoginForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-      console.log('data submitted') // Proceed with form submission
+
+      console.log(formData)
+
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result.error) {
+        alert("Invalid Credentials");
+        setLoading(false);
+      } else {
+        router.push("/");
+      }
+
     } else {
       setErrors(validationErrors);
     }
@@ -38,6 +69,11 @@ const Login = () => {
     });
   };
 
+  if (status === "loading" || loading) {
+    return <LoadingSpinner />;
+  } else if (status === "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-0">
@@ -55,7 +91,6 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                 <div className="mb-8">
                   <label
-                    for="username"
                     className="block text-gray-700 text-md font-bold mb-2"
                   >
                     <span className="text-teal-500">&nbsp;*</span>
@@ -92,7 +127,6 @@ const Login = () => {
 
                 <div className="mb-8">
                   <label
-                    for="password"
                     className="block text-gray-700 text-md font-bold mb-2"
                   >
                     <span className="text-teal-500">&nbsp;*</span>
@@ -127,36 +161,9 @@ const Login = () => {
                   </strong>}
                 </div>
 
-                {/* <div className="mb-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <label
-                        className="block text-gray-500 font-bold"
-                        for="remember"
-                      >
-                        <input
-                          className="ml-2 leading-tight"
-                          type="checkbox"
-                          id="remember"
-                          name="remember"
-                        />
-                        <span className="text-sm">remember me</span>
-                      </label>
-                    </div>
-                    <div>
-                      <a
-                        className="font-bold text-sm text-teal-500 hover:text-teal-800"
-                        href="#password-request"
-                      >
-                        forgot password
-                      </a>
-                    </div>
-                  </div>
-                </div> */}
-
                 <div className="mb-4 text-center">
                   <button
-                    className="transition duration-500 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="transition duration-500 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2 mb-5"
                     type="submit"
                   >
                     Login
@@ -177,7 +184,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
+    )
 };
 
 export default Login;
