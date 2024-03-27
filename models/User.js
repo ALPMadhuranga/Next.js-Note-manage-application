@@ -1,21 +1,21 @@
 import mongoose from "mongoose";
 
-const { Schema,model,models } = mongoose;
+const { Schema, model, models } = mongoose;
 
 const UserSchema = new Schema(
     {
         username: {
             type: String,
-            required: true,
+            required: [true, "Username is required"],
         },
         email: {
             type: String,
             unique: true,
-            required: true
+            required: [true, "Email is required"],
         },
         password: {
             type: String,
-            required: true,
+            required: [true, "Password is required"],
         }
     },
     {timestamps: true}
