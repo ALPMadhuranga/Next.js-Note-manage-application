@@ -1,34 +1,33 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { validateRegisterForm } from "@/validation/formValidation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
-
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  })
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const [errors, setErrors] = useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateRegisterForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-
-      console.log(formData)
+      console.log(formData);
 
       try {
-        const res = await fetch("/api/register", {      //  Proceed with form submission
+        const res = await fetch("/api/register", {
+          //  Proceed with form submission
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,33 +40,31 @@ const Register = () => {
         });
         if (res.status === 400) {
           console.log("This email is already registered");
-      }
-      if (res.status === 200) {
+        }
+        if (res.status === 200) {
           console.log("");
           router.push("/login");
-      }
-
+        }
       } catch (error) {
-        console.log("Error, try again!")
-        console.log(error)
+        console.log("Error, try again!");
+        console.log(error);
       }
     } else {
-      setErrors(validationErrors)
+      setErrors(validationErrors);
     }
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
     setErrors({
       ...errors,
-      [name]: '', // Clear error when user starts typing again
+      [name]: "", // Clear error when user starts typing again
     });
   };
-  
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-5">
@@ -102,9 +99,11 @@ const Register = () => {
                       placeholder="Enter your username"
                     />
                   </div>
-                  {errors.username && <strong className="text-red-500 text-xs">
-                    {errors.username}
-                  </strong>}
+                  {errors.username && (
+                    <strong className="text-red-500 text-xs">
+                      {errors.username}
+                    </strong>
+                  )}
                 </div>
 
                 <div className="mb-8">
@@ -126,9 +125,11 @@ const Register = () => {
                       placeholder="test@example.com"
                     />
                   </div>
-                  {errors.email && <strong className="text-red-500 text-xs">
-                    {errors.email}
-                  </strong>}
+                  {errors.email && (
+                    <strong className="text-red-500 text-xs">
+                      {errors.email}
+                    </strong>
+                  )}
                 </div>
 
                 <div className="mb-8">
@@ -150,9 +151,11 @@ const Register = () => {
                       placeholder="Enter your password"
                     />
                   </div>
-                  {errors.password && <strong className="text-red-500 text-xs">
-                    {errors.password}
-                  </strong>}
+                  {errors.password && (
+                    <strong className="text-red-500 text-xs">
+                      {errors.password}
+                    </strong>
+                  )}
                 </div>
 
                 <div className="mb-4 text-center">
@@ -166,8 +169,11 @@ const Register = () => {
                 <hr />
                 <div className="mt-8">
                   <p className="text-md">
-                    Already have an account? 
-                    <Link href="/login" className="font-bold text-lg text-teal-500 hover:text-teal-800">
+                    Already have an account?
+                    <Link
+                      href="/login"
+                      className="font-bold text-lg text-teal-500 hover:text-teal-800"
+                    >
                       Sign-in
                     </Link>
                   </p>

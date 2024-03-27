@@ -1,51 +1,68 @@
-"use client"
-import { useState } from 'react'
-import Image from 'next/image';
-import Link from 'next/link';
-import { MdMenuOpen } from 'react-icons/md'
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { MdMenuOpen } from "react-icons/md";
 
-import NavLogo from '../public/assets/logo2.png'
+import NavLogo from "../public/assets/logo2.png";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
-    const [  open, setOpen ] = useState( false )
+  const { data: session } = useSession();
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-    <header className="border-b bg-white border-gray-300 py-2 z-10 sticky top-0">
+      <header className="border-b bg-white border-gray-300 py-2 z-10 sticky top-0">
         <div className="flex justify-between items-center xl:max-w-7xl xl:mx-auto max-w-full px-[8%] flex-wrap">
-            <Link href="/" className='flex items-center'>
-        <Image
-            src={NavLogo}
-            alt='logo'
-            width={75}
-            height={75}
-            className='cursor-pointer'
-          />
-          <h1 className='text-3xl mt-5 font-extrabold text-teal-500 hidden sm:block'>MemoFlow</h1>
+          <Link href="/" className="flex items-center">
+            <Image
+              src={NavLogo}
+              alt="logo"
+              width={75}
+              height={75}
+              className="cursor-pointer"
+            />
+            <h1 className="text-3xl mt-5 font-extrabold text-teal-500 hidden sm:block">
+              MemoFlow
+            </h1>
           </Link>
-          <MdMenuOpen className="lg:hidden block h-10 w-10 cursor-pointer text-teal-600 hover:text-teal-400" onClick={() => setOpen(!open)} />
-          <nav className={`${open ? "block" : "hidden"} lg:flex lg:items-center lg:w-auto w-full`}>
+          <MdMenuOpen
+            className="lg:hidden block h-10 w-10 cursor-pointer text-teal-600 hover:text-teal-400"
+            onClick={() => setOpen(!open)}
+          />
+          <nav
+            className={`${
+              open ? "block" : "hidden"
+            } lg:flex lg:items-center lg:w-auto w-full`}
+          >
             <ul className="text-lg text-gray-600 lg:flex lg:justify-between">
-                <li className="lg:px-5 py-2 hover:text-teal-500 font-semibold">
+              {session && (
+                <>
+                  <li className="lg:px-5 py-2 hover:text-teal-500 font-semibold">
                     <Link href="/">Home</Link>
-
-                </li>
-                <li className="lg:px-5 py-2 hover:text-teal-500 font-semibold">
-                    <Link href="/register">Register</Link>
-                </li>
-                <li className="py-2 px-4 lg:px-6 lg:py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-800 font-semibold">
-                    <Link href="/login">Login</Link>
-                </li>
-                <li className="mx-2 py-2 px-4 lg:px-6 lg:py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-800 font-semibold">
+                  </li>
+                  <li className="mx-2 py-2 px-4 lg:px-6 lg:py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-800 font-semibold">
                     <Link href="/login">Logout</Link>
-                </li>
+                  </li>
+                </>
+              )}
+              {!session && (
+                <>
+                  <li className="lg:px-5 py-2 hover:text-teal-500 font-semibold">
+                    <Link href="/register">Register</Link>
+                  </li>
+                  <li className="py-2 px-4 lg:px-6 lg:py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-800 font-semibold">
+                    <Link href="/login">Login</Link>
+                  </li>
+                </>
+              )}
             </ul>
-         </nav>
+          </nav>
         </div>
-    </header>
-
+      </header>
     </>
-    
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
