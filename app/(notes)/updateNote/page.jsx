@@ -17,7 +17,7 @@ const Create = () => {
   const [isLading,setIsLoading]=useState(false)
 
   useEffect(() => {
-    const getPromptDetails = async () => {
+    const getNoteDetails = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(
@@ -35,7 +35,7 @@ const Create = () => {
       }
     };
 
-    if (session?.user?.id && noteId) getPromptDetails();
+    if (session?.user?.id && noteId) getNoteDetails();
   }, [session?.user?.id, noteId]);
 
 

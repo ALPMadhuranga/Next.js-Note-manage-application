@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Note Management App
+This is a simple Note Management application with CRUD functionalities and user authentication. Users can create, read, update, and delete notes after authenticating with their credentials.
 
-## Getting Started
+## Technologies Used
+    - `Next.js:` A React framework for building server-side rendered (SSR) and statically generated web applications.
+    - `MongoDB:` A NoSQL database for storing note data.
+    - `Tailwind CSS:` A utility-first CSS framework for designing responsive and customizable UI components.
 
-First, run the development server:
+## Features
+    - User authentication with credentials.
+    - Create, read, update, and delete notes (CRUD operations).
+    - Responsive and intuitive UI design.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Install dependencies
+    - Clone the repository: `git clone <repository-url>`
+    - Navigate to the project directory: `cd <project-folder>`
+    - Install dependencies: `npm install`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Configuration
+    - Set up MongoDB database and obtain connection URI.
+    - Create a .env file in the root directory and add the MongoDB connection URI:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+        ``` 
+            MONGODB_URI=your_mongodb_connection_uri
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+            NEXTAUTH_SECRET= `abc123`
+        ```
+    - Configure authentication settings as per your requirements.
 
-## Learn More
+### Getting Started
+    - First, run the development server:
 
-To learn more about Next.js, take a look at the following resources:
+        ```bash
+        npm run dev
+        ```
+    - Access the application in your browser: `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Demo
