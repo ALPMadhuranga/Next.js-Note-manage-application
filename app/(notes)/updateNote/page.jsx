@@ -1,6 +1,18 @@
-import React from 'react'
+"use client"
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Create = () => {
+  const {data: session, status} = useSession();
+  const router = useRouter();
+
+
+  if (status === "loading") {
+    return <LoadingSpinner />;
+  } else if (status === "unauthenticated") {
+    router.push("/login");
+  }
   return (
     <>
       <div className="flex min-h-screen flex-col items-center justify-between p-0">
