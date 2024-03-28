@@ -26,11 +26,7 @@ export default function Home() {
         <Link href='/createNote' className="text-5xl text-teal-500 text-left hover:text-teal-800"><RiAddBoxLine className="shadow-md hover:shadow-xl hover:shadow-teal-200"  /></Link>
       </div>
       <div className="flex flex-wrap items-center">
-      <NoteCard />
-      <NoteCard />
-      <NoteCard />
-      <NoteCard />
-      <NoteCard />
+      <NoteCard session={session} />
       </div>
     </main>
   );

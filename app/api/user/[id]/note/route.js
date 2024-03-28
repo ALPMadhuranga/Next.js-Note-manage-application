@@ -1,0 +1,15 @@
+import connect from "@/utils/db";
+import Note from "@/models/note";
+import { NextResponse } from "next/server";
+
+export const GET = async (request, { params }) => {
+    try {
+      await connect();
+  
+      const notes = await Note.find({ author: params.id });
+  
+      return new NextResponse(JSON.stringify(notes), { status: 200 });
+    } catch (error) {
+      return new NextResponse(error, { status:500 });
+    }
+  };
