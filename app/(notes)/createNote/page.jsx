@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { useState } from "react"
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
@@ -12,6 +12,8 @@ const CreateNote = () => {
     title: "",
     description: "",
   })
+
+  const [errors, setErrors] = useState("");
 
   const router = useRouter();
   
@@ -135,4 +137,4 @@ const CreateNote = () => {
   )
 }
 
-export default CreateNote
+export default CreateNote;

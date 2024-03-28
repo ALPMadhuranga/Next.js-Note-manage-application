@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 // create note
 export const POST = async (request) => {
-    const {title, description,author} = await request.json();
+    const {title, description, author} = await request.json();
     await connect();
 
     try {

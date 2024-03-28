@@ -1,14 +1,91 @@
 "use client"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useEffect, useState } from "react";
 
 const Create = () => {
   const {data: session, status} = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const noteId = searchParams.get("id");
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  })
+  const [isLading,setIsLoading]=useState(false)
+
+  useEffect(() => {
+    const getPromptDetails = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `/api/notes/${noteId}?userId=${session?.user?.id}`
+        );
+        const data = await response.json();
+
+        setFormData({
+          title: data.title,
+          description: data.description,
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (session?.user?.id && noteId) getPromptDetails();
+  }, [session?.user?.id, noteId]);
 
 
-  if (status === "loading") {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+      try {
+        const res = await fetch(
+          `/api/notes/${noteId}?userId=${session?.user?.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: formData.title,
+              description: formData.description,
+            }),
+          }
+        );
+
+        if (res.status === 404) {
+          alert("Note not found");
+          setIsLoading(false);
+        } else if (res.status === 401) {
+          alert("Unauthorized! you can update only your notes");
+          setIsLoading(false);
+        } else if (res.ok) {
+          router.push("/");
+          alert("Note successfully updated...!");
+        }
+      } catch (err) {
+        alert("Something went wrong, try again!");
+        console.log(err);
+        setIsLoading(false);
+      }
+  };
+
+
+
+  if (status === "loading" || isLading) {
     return <LoadingSpinner />;
   } else if (status === "unauthenticated") {
     router.push("/login");
@@ -27,7 +104,7 @@ const Create = () => {
             </div>
 
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-8">
                   <label
                     for="username"
@@ -40,6 +117,8 @@ const Create = () => {
                       id='title'
                       name='title'
                       type="text"
+                      value={formData.title}
+                      onChange={handleChange}
                       required
                       className="block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="Enter Note Title"
@@ -59,6 +138,8 @@ const Create = () => {
                       id='description'
                       name='description'
                       type="text"
+                      value={formData.description}
+                      onChange={handleChange}
                       required
                       className="h-48 block pr-10 shadow appearance-none border-2 border-teal-100 rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 transition duration-500 ease-in-out"
                       placeholder="Enter Description"
