@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdMenuOpen } from "react-icons/md";
 
-import NavLogo from "../public/assets/logo2.png";
+import NavLogo from "../public/assets/favicon.png";
 import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
@@ -16,12 +16,12 @@ const Navbar = () => {
     <>
       <header className="border-b bg-white border-gray-300 py-2 z-10 sticky top-0">
         <div className="flex justify-between items-center xl:max-w-7xl xl:mx-auto max-w-full px-[8%] flex-wrap">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex justify-between">
             <Image
               src={NavLogo}
               alt="logo"
-              width={75}
-              height={75}
+              width={85}
+              height={85}
               className="cursor-pointer"
             />
             <h1 className="text-3xl mt-5 font-extrabold text-teal-500 hidden sm:block">
