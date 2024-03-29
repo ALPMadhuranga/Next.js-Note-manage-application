@@ -118,7 +118,11 @@ const NoteCard = ({ session }) => {
               </div>
             ))
           ) : (
-            <></>
+            <>
+            <h1 className="flex text-xl text-gray-500 w-full justify-center text-md">
+              "Press the <strong className="px-2 text-teal-600"> Add </strong> button to input your notes"
+            </h1>
+            </>
           )}
         </>
       )}
