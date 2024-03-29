@@ -48,6 +48,7 @@ const Login = () => {
 
     } else {
       setErrors(validationErrors);
+      setLoading(false)
     }
   };
 
